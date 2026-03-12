@@ -1,0 +1,66 @@
+# Claude Configuration
+
+## Pre-Task Hooks
+
+### Repository Update Hook
+```yaml
+pre_task_hooks:
+  - name: ssh_network_tuning_update
+    description: "Always update ssh-and-network-tuning repository before any substantial task"
+    repository_path: "/projects/69b235ed78cc8ded7792d113/ssh-and-network-tuning"
+    command_sequence:
+      - cd /projects/69b235ed78cc8ded7792d113/ssh-and-network-tuning
+      - git status
+      - git fetch origin
+      - git pull origin main || git pull origin $(git branch --show-current)
+      - cd /projects/69b235ed78cc8ded7792d113
+    conditions:
+      - task_involves_code_changes: true
+      - task_involves_analysis: true
+      - task_involves_repository_ops: true
+      - task_involves_ssh_network_tuning: true
+    exceptions:
+      - read_only_quick_ops: false
+      - user_explicit_skip: false
+    auto_execute: true
+```
+
+## Workflow Rules
+
+### Mandatory Update Scenarios
+- Code modifications in ssh-and-network-tuning
+- File creation/deletion in ssh-and-network-tuning
+- Branch operations on ssh-and-network-tuning
+- Dependency updates in ssh-and-network-tuning
+- Configuration changes in ssh-and-network-tuning
+- Build/test operations for ssh-and-network-tuning
+
+### Optional Update Scenarios  
+- Simple file viewing in ssh-and-network-tuning
+- Status checks on ssh-and-network-tuning
+- Documentation reading from ssh-and-network-tuning
+
+### Quick Update Command
+For manual execution of the update process:
+```bash
+./.claude/update-repo.sh
+```
+
+### Integration with Tasks
+Before any substantial task involving the ssh-and-network-tuning repository:
+```bash
+# Option 1: Use the automated script
+./.claude/update-repo.sh
+
+# Option 2: Manual update sequence  
+cd ssh-and-network-tuning && git fetch origin && git pull && cd ..
+```
+
+## Error Handling
+- If update fails, stop and report issue
+- If conflicts exist, ask user for resolution strategy
+- If working directory is dirty, request guidance
+
+---
+*Configuration version: 1.0*
+*Last updated: 2026-03-12*
