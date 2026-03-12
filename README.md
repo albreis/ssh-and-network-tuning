@@ -1,4 +1,4 @@
-# 🔧 SSH & Network Tuning — Infraestrutura
+# 🔧 SSH & Network Tuning
 
 Módulo Terraform para aplicação automática de tuning de **rede**, **SSH** e **limites de sistema** nos servidores. O objetivo é otimizar o desempenho de conexões, aumentar a capacidade de sessões simultâneas e garantir estabilidade sob alta carga.
 
